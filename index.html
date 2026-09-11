@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OG — Original content, engineered</title>
+<meta name="description" content="OG turns what's trending into content ideas that sound like you — built for X's Original Content Rewards program.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #12241C;
+    --bg-deep: #0D1B15;
+    --paper: #EFE9DA;
+    --paper-dim: #C9C2AE;
+    --ink: #12241C;
+    --accent: #D4A73D;
+    --accent-dim: #8C7530;
+    --line: rgba(239,233,218,0.14);
+    --radius: 3px;
+    --serif: 'Fraunces', serif;
+    --sans: 'IBM Plex Sans', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--paper);
+    font-family:var(--sans);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  img,svg{display:block;max-width:100%;}
+
+  :focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+  }
+
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    padding:28px 0 0;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:1.35rem;
+    letter-spacing:0.01em;
+  }
+  .brand .dot{
+    width:9px;height:9px;border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 0 3px rgba(212,167,61,0.18);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:64px 0 88px;
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:56px;
+    align-items:center;
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:clamp(2.4rem, 5vw, 3.6rem);
+    line-height:1.06;
+    letter-spacing:-0.01em;
+    margin:0 0 22px;
+    max-width:14ch;
+  }
+  .hero p.lede{
+    font-size:1.08rem;
+    color:var(--paper-dim);
+    max-width:46ch;
+    margin:0 0 34px;
+  }
+
+  form.waitlist{
+    display:flex;
+    gap:0;
+    max-width:460px;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    background:rgba(239,233,218,0.03);
+  }
+  form.waitlist input[type="email"]{
+    flex:1;
+    border:0;
+    background:transparent;
+    color:var(--paper);
+    font-family:var(--sans);
+    font-size:0.98rem;
+    padding:15px 16px;
+    min-width:0;
+  }
+  form.waitlist input[type="email"]::placeholder{color:var(--paper-dim);}
+  form.waitlist button{
+    border:0;
+    background:var(--accent);
+    color:var(--bg-deep);
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:0.95rem;
+    padding:15px 22px;
+    cursor:pointer;
+    transition:background 0.15s ease;
+    white-space:nowrap;
+  }
+  form.waitlist button:hover{background:#e3b854;}
+
+  .field-handle{
+    margin-top:10px;
+    max-width:460px;
+  }
+  .field-handle input{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:rgba(239,233,218,0.03);
+    color:var(--paper);
+    font-family:var(--sans);
+    font-size:0.9rem;
+    padding:11px 14px;
+  }
+  .field-handle input::placeholder{color:var(--paper-dim);}
+
+  .form-note{
+    margin-top:12px;
+    font-size:0.84rem;
+    color:var(--paper-dim);
+  }
+  .form-status{
+    margin-top:12px;
+    font-size:0.9rem;
+    min-height:1.2em;
+  }
+  .form-status.ok{color:var(--accent);}
+  .form-status.err{color:#e08a6b;}
+
+  /* ---------- Hero card mock ---------- */
+  .card{
+    background:var(--paper);
+    color:var(--ink);
+    border-radius:2px;
+    padding:26px 26px 22px;
+    position:relative;
+    box-shadow: 8px 8px 0 rgba(0,0,0,0.22);
+  }
+  .card::before{
+    content:"OPPORTUNITY";
+    position:absolute;
+    top:-12px; left:22px;
+    background:var(--accent);
+    color:var(--bg-deep);
+    font-family:var(--sans);
+    font-size:0.68rem;
+    font-weight:600;
+    letter-spacing:0.06em;
+    padding:4px 10px;
+    border-radius:2px;
+  }
+  .card h3{
+    font-family:var(--serif);
+    font-size:1.3rem;
+    margin:12px 0 6px;
+    line-height:1.2;
+  }
+  .card .angle{
+    font-size:0.92rem;
+    color:#3a4a40;
+    margin:0 0 18px;
+  }
+  .stat-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    font-family:var(--mono);
+    font-size:0.8rem;
+    margin:14px 0 4px;
+    color:#3a4a40;
+  }
+  .bar{
+    height:6px;
+    background:rgba(18,36,28,0.12);
+    border-radius:3px;
+    overflow:hidden;
+  }
+  .bar span{
+    display:block;
+    height:100%;
+    background:var(--accent-dim);
+  }
+  .card .divider{
+    border:0;border-top:1px solid rgba(18,36,28,0.14);
+    margin:20px 0 14px;
+  }
+  .card .relevance{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-size:0.84rem;
+    color:#3a4a40;
+  }
+  .card .relevance b{
+    font-family:var(--mono);
+    color:var(--ink);
+    font-size:0.95rem;
+  }
+
+  /* ---------- Sections ---------- */
+  section{
+    padding:64px 0;
+    border-top:1px solid var(--line);
+  }
+  .kicker{
+    font-family:var(--mono);
+    font-size:0.78rem;
+    color:var(--accent);
+    margin:0 0 14px;
+  }
+  h2{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:clamp(1.7rem, 3vw, 2.3rem);
+    line-height:1.15;
+    max-width:20ch;
+    margin:0 0 20px;
+  }
+  .section-lede{
+    color:var(--paper-dim);
+    max-width:58ch;
+    font-size:1.02rem;
+    margin:0 0 40px;
+  }
+
+  .engines{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+  }
+  .engine{
+    border:1px solid var(--line);
+    border-top:3px solid var(--accent-dim);
+    padding:22px 20px 24px;
+    background:rgba(239,233,218,0.025);
+  }
+  .engine:nth-child(2){border-top-color:var(--accent);}
+  .engine:nth-child(3){border-top-color:var(--paper-dim);}
+  .engine h4{
+    font-family:var(--serif);
+    font-size:1.15rem;
+    margin:0 0 10px;
+  }
+  .engine p{
+    font-size:0.93rem;
+    color:var(--paper-dim);
+    margin:0;
+  }
+
+  .statement{
+    text-align:left;
+    padding:80px 0;
+  }
+  .statement blockquote{
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:clamp(1.6rem, 4vw, 2.5rem);
+    line-height:1.25;
+    max-width:18ch;
+    margin:0 0 18px;
+  }
+  .statement cite{
+    display:block;
+    font-style:normal;
+    font-family:var(--mono);
+    font-size:0.82rem;
+    color:var(--paper-dim);
+  }
+
+  .cta-final{
+    text-align:center;
+    padding:88px 0 64px;
+  }
+  .cta-final h2{
+    max-width:none;
+    margin:0 auto 30px;
+  }
+  .cta-final form.waitlist,
+  .cta-final .field-handle{
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .cta-final .form-note{text-align:center;}
+  .cta-final .form-status{text-align:center;}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:28px 0 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:12px;
+    font-size:0.85rem;
+    color:var(--paper-dim);
+  }
+  footer a{text-decoration:underline;text-underline-offset:3px;}
+
+  @media (max-width: 860px){
+    .hero{grid-template-columns:1fr;gap:44px;padding:44px 0 64px;}
+    .engines{grid-template-columns:1fr;}
+    form.waitlist{flex-direction:column;}
+    form.waitlist button{padding:14px;}
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    .hero h1, .hero p.lede, .hero form, .hero .field-handle, .hero .form-note, .card{
+      animation: rise 0.7s ease both;
+    }
+    .hero p.lede{animation-delay:0.08s;}
+    .hero form{animation-delay:0.16s;}
+    .hero .field-handle{animation-delay:0.2s;}
+    .hero .form-note{animation-delay:0.24s;}
+    .card{animation-delay:0.1s;}
+  }
+  @keyframes rise{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <div class="brand"><span class="dot"></span> OG</div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero" style="border-top:none;padding-top:56px;">
+    <div>
+      <h1>Stay original. Get seen. Get paid.</h1>
+      <p class="lede">OG turns what's trending into content ideas that actually sound like you — so you can clear X's Original Content Rewards threshold without guessing what to post next.</p>
+
+      <form class="waitlist" id="waitlistForm">
+        <input type="email" name="email" placeholder="you@email.com" required aria-label="Email address">
+        <button type="submit">Join the waitlist</button>
+      </form>
+      <div class="field-handle">
+        <input type="text" name="handle" placeholder="Your X handle (optional)" aria-label="X handle, optional">
+      </div>
+      <p class="form-note">No spam. One email when early access opens.</p>
+      <p class="form-status" id="formStatus" role="status"></p>
+    </div>
+
+    <div class="card">
+      <h3>Local tech story is trending</h3>
+      <p class="angle">Suggested angle: local perspective + a global comparison your audience hasn't seen yet.</p>
+
+      <div class="stat-row"><span>FOLLOWERS</span><span>412 / 500</span></div>
+      <div class="bar"><span style="width:82%;"></span></div>
+
+      <div class="stat-row"><span>90-DAY IMPRESSIONS</span><span>412K / 500K</span></div>
+      <div class="bar"><span style="width:82%;"></span></div>
+
+      <hr class="divider">
+      <div class="relevance"><span>Relevance to your audience</span><b>91%</b></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="kicker">THE WINDOW</p>
+    <h2>X just rewrote how creators get paid.</h2>
+    <p class="section-lede">Original Content Rewards replaced revenue sharing in August 2026, and the bar to qualify is real: 500 verified followers and 500,000 qualifying impressions from Premium subscribers in a rolling 90 days. The creators who build consistent, genuinely original content now are the ones who'll clear it first — not the ones who wait and scramble later.</p>
+  </section>
+
+  <section>
+    <p class="kicker">HOW IT THINKS</p>
+    <h2>Three engines, one loop.</h2>
+    <p class="section-lede">OG isn't a tweet generator. It's a running loop that learns what you sound like, watches what's happening, and tells you what's worth your time today.</p>
+
+    <div class="engines">
+      <div class="engine">
+        <h4>Creator Intelligence</h4>
+        <p>Learns your niche, your voice, and which of your own posts have actually worked — so every suggestion sounds like you, not a template.</p>
+      </div>
+      <div class="engine">
+        <h4>Opportunity Engine</h4>
+        <p>Watches real-time news and trends, then surfaces only the handful that genuinely fit your audience — with a specific angle, not just a headline.</p>
+      </div>
+      <div class="engine">
+        <h4>Performance Engine</h4>
+        <p>Tracks what each post actually earns you in reach and engagement, and feeds it straight back into what gets suggested next week.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="statement">
+    <blockquote>We never post for you. OG drafts the angle — you decide what's actually yours.</blockquote>
+    <cite>Copilot, not autopilot.</cite>
+  </section>
+
+  <section class="cta-final">
+    <h2>Be first in when access opens.</h2>
+    <form class="waitlist" id="waitlistForm2">
+      <input type="email" name="email" placeholder="you@email.com" required aria-label="Email address">
+      <button type="submit">Join the waitlist</button>
+    </form>
+    <p class="form-note">No spam. One email when early access opens.</p>
+    <p class="form-status" id="formStatus2" role="status"></p>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>© 2026 OG.</span>
+  <span>Follow the build → <a href="https://x.com/ambientskeptic" target="_blank" rel="noopener">@ambientskeptic on X</a></span>
+</footer>
+
+<script>
+  // Posts to the Vercel serverless function in /api/waitlist.js, which adds the
+  // email to a Resend Audience. Add RESEND_API_KEY and RESEND_AUDIENCE_ID as
+  // environment variables in your Vercel project settings — see api/waitlist.js.
+  const ENDPOINT = "/api/waitlist";
+
+  function wireForm(formId, statusId){
+    const form = document.getElementById(formId);
+    const status = document.getElementById(statusId);
+    if(!form) return;
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = form.querySelector('input[type="email"]').value.trim();
+      const handleInput = form.parentElement.querySelector('.field-handle input');
+      const handle = handleInput ? handleInput.value.trim() : "";
+      if(!email){ return; }
+
+      status.textContent = "Joining...";
+      status.className = "form-status";
+
+      try{
+        const res = await fetch(ENDPOINT, {
+          method: "POST",
+          headers: { "Accept": "application/json", "Content-Type": "application/json" },
+          body: JSON.stringify({ email, handle })
+        });
+        if(res.ok){
+          status.textContent = "You're on the list. Watch your inbox.";
+          status.className = "form-status ok";
+          form.reset();
+          if(handleInput) handleInput.value = "";
+        } else {
+          status.textContent = "Something went wrong — try again in a moment.";
+          status.className = "form-status err";
+        }
+      } catch(err){
+        status.textContent = "Couldn't reach the server — check your connection and try again.";
+        status.className = "form-status err";
+      }
+    });
+  }
+
+  wireForm("waitlistForm", "formStatus");
+  wireForm("waitlistForm2", "formStatus2");
+</script>
+
+</body>
+</html>
