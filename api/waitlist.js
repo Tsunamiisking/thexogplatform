@@ -2,12 +2,20 @@
 // waitlist form in index.html.
 //
 // Setup (in your Vercel project → Settings → Environment Variables):
-//   RESEND_API_KEY      — from resend.com/api-keys
-//   RESEND_AUDIENCE_ID  — from resend.com/audiences (create an audience called
-//                          something like "OG waitlist" and copy its ID)
+//   RESEND_API_KEY — from resend.com/api-keys
 //
-// Leaving these unset is safe — the function just returns a clear error
-// instead of crashing, so add the real values yourself whenever you're ready.
+// That's the only variable needed. Resend's current "Global Contacts" model
+// doesn't require an Audience or Segment ID to create a contact — those are
+// now optional, purely for internal organization. See:
+// https://resend.com/docs/dashboard/segments/migrating-from-audiences-to-segments
+//
+// Leaving RESEND_API_KEY unset is safe — the function just returns a clear
+// error instead of crashing, so add the real value yourself whenever ready.
+//
+// Optional: if you later want waitlist signups grouped into a Segment (e.g.
+// the "General" one shown in your dashboard, or a new "Waitlist" one you
+// create), grab its ID from the Segments tab and add it to the request body
+// below as: segments: ["your-segment-id"]
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -22,32 +30,28 @@ export default async function handler(req, res) {
   }
 
   const RESEND_API_KEY = process.env.RESEND_API_KEY; // <-- add in Vercel env vars
-  const RESEND_AUDIENCE_ID = process.env.RESEND_AUDIENCE_ID; // <-- add in Vercel env vars
 
-  if (!RESEND_API_KEY || !RESEND_AUDIENCE_ID) {
-    console.error("Missing RESEND_API_KEY or RESEND_AUDIENCE_ID env vars");
+  if (!RESEND_API_KEY) {
+    console.error("Missing RESEND_API_KEY env var");
     return res.status(500).json({ error: "Waitlist isn't configured yet — try again soon" });
   }
 
   try {
-    const resendRes = await fetch(
-      `https://api.resend.com/audiences/${RESEND_AUDIENCE_ID}/contacts`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${RESEND_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          unsubscribed: false,
-          // Resend contacts don't have a native "X handle" field, so it's
-          // tucked into first_name for now — fine for a waitlist, revisit if
-          // you outgrow it.
-          first_name: handle || undefined,
-        }),
-      }
-    );
+    const resendRes = await fetch("https://api.resend.com/contacts", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        unsubscribed: false,
+        // Resend contacts don't have a native "X handle" field, so it's
+        // tucked into first_name for now — fine for a waitlist, revisit if
+        // you outgrow it.
+        first_name: handle || undefined,
+      }),
+    });
 
     if (!resendRes.ok) {
       const errText = await resendRes.text();
